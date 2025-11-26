@@ -174,7 +174,7 @@ struct Tugas {
     bool selesai;
 };
 
-// Kelas untuk mengelola Notes
+// Class untuk mengelola Notes
 class PengelolaCatatan {
 private:
     vector<Catatan> daftarCatatan;
@@ -217,6 +217,7 @@ public:
     void tambahCatatan() {
         Catatan catatan;
         catatan.id = idBerikutnya++;
+        cout << endl;
         cout << "Masukkan subjek: ";
         cin.ignore();
         getline(cin, catatan.subjek);
@@ -231,6 +232,7 @@ public:
 
     void lihatCatatan() {
         if (daftarCatatan.empty()) {
+            cout << endl;
             cout << "Tidak ada catatan." << endl;
             return;
         }
@@ -245,6 +247,7 @@ public:
 
     void editCatatan() {
         int id;
+        cout << endl;
         cout << "Masukkan ID catatan yang ingin diedit: ";
         cin >> id;
         auto it = find_if(daftarCatatan.begin(), daftarCatatan.end(), [id](const Catatan& c) { return c.id == id; });
@@ -265,6 +268,7 @@ public:
 
     void hapusCatatan() {
         int id;
+        cout << endl;
         cout << "Masukkan ID catatan yang ingin dihapus: ";
         cin >> id;
         auto it = remove_if(daftarCatatan.begin(), daftarCatatan.end(), [id](const Catatan& c) { return c.id == id; });
@@ -455,7 +459,7 @@ public:
     }
 };
 
-// Kelas untuk mengelola Personal Task Organizer
+// class untuk mengelola Personal Task Organizer
 class PengorganisirTugas {
 private:
     vector<Tugas> daftarTugas;
@@ -572,12 +576,14 @@ public:
         }
         double productivityIndex = (tugasSelesai + totalJam) / (totalTugas + perencana.getDaftarSesi().size()) * 100.0;
 
-        cout << "----- Laporan Mingguan -----" << endl;
+        cout << endl;
+        cout << "--------- LAPORAN MINGGUAN --------" << endl;
         cout << "Total Jam Belajar: " << totalJam << endl;
         cout << "Tugas Selesai: " << tugasSelesai << "/" << totalTugas << " (" << (totalTugas > 0 ? (tugasSelesai * 100.0 / totalTugas) : 0) << "%)" << endl;
         cout << "Total Spent: Rp " << totalSpent << endl;
         cout << "Productivity Index: " << productivityIndex << "%" << endl;
         cout << "-----------------------------------" << endl;
+        cout << endl;
     }
 };
 
@@ -633,9 +639,9 @@ int main() {
 
     int pilihan;
     do {
-        cout << "=============================" << endl;
-        cout << "CAMPUS LIFE ASSISTANT" << endl;
-        cout << "=============================" << endl;
+        cout << "==============================" << endl;
+        cout << "     CAMPUS LIFE ASSISTANT" << endl;
+        cout << "==============================" << endl;
         cout << "1. Academic Tools" << endl;
         cout << "2. Student Life Tools" << endl;
         cout << "3. Reports & Insights" << endl;
@@ -649,7 +655,10 @@ int main() {
                 // Academic Tools submenu
                 int subPilihan;
                 do {
-                    cout << "Academic Tools:" << endl;
+                    cout << endl;
+                    cout << "==============================" << endl;
+                    cout << "       Academic Tools" << endl;
+                    cout << "==============================" << endl;
                     cout << "1. Notes Manager" << endl;
                     cout << "2. Study Planner" << endl;
                     cout << "0. Back" << endl;
@@ -659,7 +668,10 @@ int main() {
                         case 1: {
                             int subSub;
                             do {
-                                cout << "Notes Manager:" << endl;
+                                cout << endl;
+                                cout << "==============================" << endl;
+                                cout << "        Notes Manager" << endl;
+                                cout << "==============================" << endl;
                                 cout << "1. Tambah Catatan" << endl;
                                 cout << "2. Lihat Catatan" << endl;
                                 cout << "3. Edit Catatan" << endl;
@@ -677,7 +689,10 @@ int main() {
                         case 2: {
                             int subSub;
                             do {
-                                cout << "Study Planner:" << endl;
+                                cout << endl;
+                                cout << "==============================" << endl;
+                                cout << "        Study Planner" << endl;
+                                cout << "==============================" << endl;
                                 cout << "1. Tambah Sesi" << endl;
                                 cout << "2. Tandai Selesai" << endl;
                                 cout << "3. Lihat Sesi" << endl;
@@ -700,7 +715,10 @@ int main() {
                 // Student Life Tools submenu
                 int subPilihan;
                 do {
-                    cout << "Student Life Tools:" << endl;
+                    cout << endl;
+                    cout << "==============================" << endl;
+                    cout << "     Student Life Tools" << endl;
+                    cout << "==============================" << endl;
                     cout << "1. Expense Tracker" << endl;
                     cout << "2. Personal Task Organizer" << endl;
                     cout << "0. Back" << endl;
@@ -710,7 +728,10 @@ int main() {
                         case 1: {
                             int subSub;
                             do {
-                                cout << "Expense Tracker:" << endl;
+                                cout << endl;
+                                cout << "==============================" << endl;
+                                cout << "       Expense Tracker" << endl;
+                                cout << "==============================" << endl;
                                 cout << "1. Tambah Pengeluaran" << endl;
                                 cout << "2. Lihat Pengeluaran" << endl;
                                 cout << "3. Visualisasi" << endl;
@@ -726,7 +747,10 @@ int main() {
                         case 2: {
                             int subSub;
                             do {
-                                cout << "Personal Task Organizer:" << endl;
+                                cout << endl;
+                                cout << "==============================" << endl;
+                                cout << "   Personal Task Organizer" << endl;
+                                cout << "==============================" << endl;
                                 cout << "1. Tambah Tugas" << endl;
                                 cout << "2. Tandai Selesai" << endl;
                                 cout << "3. Lihat Tugas" << endl;
@@ -750,7 +774,10 @@ int main() {
             case 4: {
                 int subPilihan;
                 do {
-                    cout << "Settings:" << endl;
+                    cout << endl;
+                    cout << "==============================" << endl;
+                    cout << "          Settings" << endl;
+                    cout << "==============================" << endl;
                     cout << "1. Ubah Nama Pengguna" << endl;
                     cout << "2. Ubah Mata Uang" << endl;
                     cout << "3. Backup Data" << endl;
