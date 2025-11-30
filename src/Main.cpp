@@ -1215,7 +1215,7 @@ int main() {
     clearScreen();  
     SetConsoleOutputCP(CP_UTF8);
 
-    // slideUp();      
+    slideUp();      
     clearScreen();  
 
     // Pilihannya kujadiin class bang, kalo ga sesuai revert aja
