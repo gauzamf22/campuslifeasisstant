@@ -118,7 +118,7 @@ string bigText[] = {
  "  ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░     ░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░  ░▒▓█▓▒░  ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░    ", 
  "  ░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░     ░▒▓█▓▒░▒▓█▓▒░      ░▒▓█▓▒░  ░▒▓█▓▒░  ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░    ", 
  "  ░▒▓█▓▒░░▒▓█▓▒░▒▓███████▓▒░▒▓███████▓▒░░▒▓█▓▒░▒▓███████▓▒░   ░▒▓█▓▒░  ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░ ░▒▓█▓▒░    "
-                                                                                                                                      
+                                                                                                                                       
 };
 
 int textHeight = sizeof(bigText) / sizeof(bigText[0]);
@@ -619,17 +619,606 @@ public:
     }
 };
 
-// Fungsi utama
+// Kelas untuk Menu
+class Menu {
+private:
+    PengelolaCatatan& pengelolaCatatan;
+    PerencanaBelajar& perencanaBelajar;
+    PelacakPengeluaran& pelacakPengeluaran;
+    PengorganisirTugas& pengorganisirTugas;
+    Laporan& laporan;
+    Pengaturan& pengaturan;
+    bool tampilkanMenuUtamaPernahDipanggil = false;
+    bool menuAcademicToolsPernahDipanggil = false;
+    bool menuNotesManagerPernahDipanggil = false;
+    bool menuStudyPlannerPernahDipanggil = false;
+    bool menuStudentLifeToolsPernahDipanggil = false;
+    bool menuExpenseTrackerPernahDipanggil = false;
+    bool menuTaskOrganizerPernahDipanggil = false;
+    bool menuSettingsPernahDipanggil = false;
+
+public:
+    Menu(PengelolaCatatan& pc, PerencanaBelajar& pb, PelacakPengeluaran& pp, PengorganisirTugas& pt, Laporan& l, Pengaturan& ps)
+    : pengelolaCatatan(pc), perencanaBelajar(pb), pelacakPengeluaran(pp), pengorganisirTugas(pt), laporan(l), pengaturan(ps) {
+        tampilkanMenuUtama();
+    }
+
+    void tampilkanMenuUtama() {
+        string text  = "CAMPUS LIFE ASSISTANT";
+        char pilihan;
+        char c;
+        do{
+            // Untuk tampilan pertama kali doang
+            if (!tampilkanMenuUtamaPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "     ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Academic Tools", 20);
+                Sleep(150);
+                delayPrint("2. Student Life Tools", 20);
+                Sleep(150);
+                delayPrint("3. Reports & Insights", 20);
+                Sleep(150);
+                delayPrint("4. Settings", 20);
+                Sleep(150);
+                delayPrint("5. Exit", 20);
+                Sleep(500);
+                delayPrint("Choose option: ", 20);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "     CAMPUS LIFE ASSISTANT" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Academic Tools" << endl;
+                cout << "2. Student Life Tools" << endl;
+                cout << "3. Reports & Insights" << endl;
+                cout << "4. Settings" << endl;
+                cout << "5. Exit" << endl;
+                delayPrint("Choose option: ", 20);
+                cout << endl;
+            }
+
+            pilihan = _getch();
+            switch (pilihan) {
+                case '1':
+                    clearScreen();
+                    menuAcademicTools();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    menuStudentLifeTools();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    laporan.tampilkanLaporanMingguan();
+                    cout << endl << endl << "Tekan apa saja untuk keluar";
+                    c = _getch();
+                    clearScreen();
+                    break;
+                case '4':
+                    clearScreen();
+                    menuSettings();
+                    clearScreen();
+                    break;
+                case '5':
+                    pengaturan.backupData();
+                    Sleep(250);
+                    delayPrint("Thank you for using Campus Life Assistant!", 20);
+                    delayPrint("Data saved successfully.", 20);
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20); 
+                    Sleep(250);
+                    clearScreen();
+            }
+            tampilkanMenuUtamaPernahDipanggil = true;
+        } while (pilihan != '5');
+    }
+
+    void menuAcademicTools() {
+        string text = "Academic Tools";
+        char subPilihan;
+        do {
+            // Tampilan pertama kali
+            if (!menuAcademicToolsPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "       ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Notes Manager", 20);
+                Sleep(150);
+                delayPrint("2. Study Planner", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "       Academic Tools" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Notes Manager" << endl;
+                cout << "2. Study Planner" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subPilihan = _getch();
+            switch (subPilihan) {
+                case '1':
+                    clearScreen();
+                    menuNotesManager();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    menuStudyPlanner();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20); 
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuAcademicToolsPernahDipanggil = true;
+        } while (subPilihan != '0');
+    }
+
+    void menuNotesManager() {
+        string text = "Notes Manager";
+        char subSub;
+        do {
+            // Tampilan pertama kali
+            if (!menuNotesManagerPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "        ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Tambah Catatan", 20);
+                Sleep(150);
+                delayPrint("2. Lihat Catatan", 20);
+                Sleep(150);
+                delayPrint("3. Edit Catatan", 20);
+                Sleep(150);
+                delayPrint("4. Hapus Catatan", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "        Notes Manager" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Tambah Catatan" << endl;
+                cout << "2. Lihat Catatan" << endl;
+                cout << "3. Edit Catatan" << endl;
+                cout << "4. Hapus Catatan" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subSub = _getch();
+            switch (subSub) {
+                case '1':
+                    clearScreen();
+                    pengelolaCatatan.tambahCatatan();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    pengelolaCatatan.lihatCatatan();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    pengelolaCatatan.editCatatan();
+                    clearScreen();
+                    break;
+                case '4':
+                    clearScreen();
+                    pengelolaCatatan.hapusCatatan();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuNotesManagerPernahDipanggil = true;
+        } while (subSub != '0');
+    }
+
+    void menuStudyPlanner() {
+        string text = "Study Planner";
+        char subSub;
+        do {
+            // Tampilan pertama kali
+            if (!menuStudyPlannerPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "        ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Tambah Sesi", 20);
+                Sleep(150);
+                delayPrint("2. Tandai Selesai", 20);
+                Sleep(150);
+                delayPrint("3. Lihat Sesi", 20);
+                Sleep(150);
+                delayPrint("4. Produktivitas", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "        Study Planner" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Tambah Sesi" << endl;
+                cout << "2. Tandai Selesai" << endl;
+                cout << "3. Lihat Sesi" << endl;
+                cout << "4. Produktivitas" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subSub = _getch();
+            switch (subSub) {
+                case '1':
+                    clearScreen();
+                    perencanaBelajar.tambahSesi();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    perencanaBelajar.tandaiSelesai();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    perencanaBelajar.lihatSesi();
+                    clearScreen();
+                    break;
+                case '4':
+                    clearScreen();
+                    cout << "Produktivitas: " << perencanaBelajar.hitungProduktivitas() << "%" << endl;
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuStudyPlannerPernahDipanggil = true;
+        } while (subSub != '0');
+    }
+
+    void menuStudentLifeTools() {
+        string text = "Student Life Tools";
+        char subPilihan;
+        do {
+            // Tampilan pertama kali
+            if (!menuStudentLifeToolsPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "     ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Expense Tracker", 20);
+                Sleep(150);
+                delayPrint("2. Personal Task Organizer", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "     Student Life Tools" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Expense Tracker" << endl;
+                cout << "2. Personal Task Organizer" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subPilihan = _getch();
+            switch (subPilihan) {
+                case '1':
+                    clearScreen();
+                    menuExpenseTracker();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    menuTaskOrganizer();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuStudentLifeToolsPernahDipanggil = true;
+        } while (subPilihan != '0');
+    }
+
+    void menuExpenseTracker() {
+        string text = "Expense Tracker";
+        char subSub;
+        do {
+            // Tampilan pertama kali
+            if (!menuExpenseTrackerPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "       ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Tambah Pengeluaran", 20);
+                Sleep(150);
+                delayPrint("2. Lihat Pengeluaran", 20);
+                Sleep(150);
+                delayPrint("3. Visualisasi", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "       Expense Tracker" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Tambah Pengeluaran" << endl;
+                cout << "2. Lihat Pengeluaran" << endl;
+                cout << "3. Visualisasi" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subSub = _getch();
+            switch (subSub) {
+                case '1':
+                    clearScreen();
+                    pelacakPengeluaran.tambahPengeluaran();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    pelacakPengeluaran.lihatPengeluaran();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    pelacakPengeluaran.visualisasiPengeluaran();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuExpenseTrackerPernahDipanggil = true;
+        } while (subSub != '0');
+    }
+
+    void menuTaskOrganizer() {
+        string text = "Personal Task Organizer";
+        char subSub;
+        do {
+            // Tampilan pertama kali
+            if (!menuTaskOrganizerPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "   ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Tambah Tugas", 20);
+                Sleep(150);
+                delayPrint("2. Tandai Selesai", 20);
+                Sleep(150);
+                delayPrint("3. Lihat Tugas", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "   Personal Task Organizer" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Tambah Tugas" << endl;
+                cout << "2. Tandai Selesai" << endl;
+                cout << "3. Lihat Tugas" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subSub = _getch();
+            switch (subSub) {
+                case '1':
+                    clearScreen();
+                    pengorganisirTugas.tambahTugas();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    pengorganisirTugas.tandaiSelesai();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    pengorganisirTugas.lihatTugas();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuTaskOrganizerPernahDipanggil = true;
+        } while (subSub != '0');
+    }
+
+    void menuSettings() {
+        string text = "Settings";
+        char subPilihan;
+        do {
+            // Tampilan pertama kali
+            if (!menuSettingsPernahDipanggil) {
+                for (int i = 0; i < text.length(); i++) {
+                    clearScreen();
+                    cout << "==============================" << endl << "          ";
+                    for (int j = 0; j < i; j++) {
+                        cout << text[j];
+                    }
+                    cout << endl << "==============================" << endl;
+                    Sleep(20);
+                }
+                Sleep(500);
+                delayPrint("1. Ubah Nama Pengguna", 20);
+                Sleep(150);
+                delayPrint("2. Ubah Mata Uang", 20);
+                Sleep(150);
+                delayPrint("3. Backup Data", 20);
+                Sleep(150);
+                delayPrint("0. Back", 20);
+                Sleep(150);
+                delayPrint("Choose option: ", 20);
+                Sleep(500);
+                cout << endl;
+            }
+            // Tampilan seterusnya
+            else {
+                cout << "==============================" << endl;
+                cout << "          Settings" << endl;
+                cout << "==============================" << endl;
+                cout << "1. Ubah Nama Pengguna" << endl;
+                cout << "2. Ubah Mata Uang" << endl;
+                cout << "3. Backup Data" << endl;
+                cout << "0. Back" << endl;
+                cout << "Choose: ";
+            }
+
+            subPilihan = _getch();
+            switch (subPilihan) {
+                case '1':
+                    clearScreen();
+                    pengaturan.ubahNamaPengguna();
+                    clearScreen();
+                    break;
+                case '2':
+                    clearScreen();
+                    pengaturan.ubahMataUang();
+                    clearScreen();
+                    break;
+                case '3':
+                    clearScreen();
+                    pengaturan.backupData();
+                    clearScreen();
+                    break;
+                case '0':
+                    clearScreen();
+                    break;
+                default:
+                    delayPrint("Pilihan tidak valid.", 20);
+                    Sleep(250);
+                    clearScreen();
+            }
+            menuSettingsPernahDipanggil = true;
+        } while (subPilihan != '0');
+    }
+};
+
 int main() {
     hideCursor();   
     clearScreen();  
     SetConsoleOutputCP(CP_UTF8);
 
-
-    slideUp();      
+    // slideUp();      
     clearScreen();  
 
-   
+    // Pilihannya kujadiin class bang, kalo ga sesuai revert aja
     PengelolaCatatan pengelolaCatatan;
     PerencanaBelajar perencanaBelajar;
     PelacakPengeluaran pelacakPengeluaran;
@@ -637,169 +1226,7 @@ int main() {
     Laporan laporan(perencanaBelajar, pengorganisirTugas, pelacakPengeluaran);
     Pengaturan pengaturan;
 
-    int pilihan;
-    do {
-        cout << "==============================" << endl;
-        cout << "     CAMPUS LIFE ASSISTANT" << endl;
-        cout << "==============================" << endl;
-        cout << "1. Academic Tools" << endl;
-        cout << "2. Student Life Tools" << endl;
-        cout << "3. Reports & Insights" << endl;
-        cout << "4. Settings" << endl;
-        cout << "5. Exit" << endl;
-        cout << "Choose option: ";
-        cin >> pilihan;
-
-        switch (pilihan) {
-            case 1: {
-                // Academic Tools submenu
-                int subPilihan;
-                do {
-                    cout << endl;
-                    cout << "==============================" << endl;
-                    cout << "       Academic Tools" << endl;
-                    cout << "==============================" << endl;
-                    cout << "1. Notes Manager" << endl;
-                    cout << "2. Study Planner" << endl;
-                    cout << "0. Back" << endl;
-                    cout << "Choose: ";
-                    cin >> subPilihan;
-                    switch (subPilihan) {
-                        case 1: {
-                            int subSub;
-                            do {
-                                cout << endl;
-                                cout << "==============================" << endl;
-                                cout << "        Notes Manager" << endl;
-                                cout << "==============================" << endl;
-                                cout << "1. Tambah Catatan" << endl;
-                                cout << "2. Lihat Catatan" << endl;
-                                cout << "3. Edit Catatan" << endl;
-                                cout << "4. Hapus Catatan" << endl;
-                                cout << "0. Back" << endl;
-                                cout << "Choose: ";
-                                cin >> subSub;
-                                if (subSub == 1) pengelolaCatatan.tambahCatatan();
-                                else if (subSub == 2) pengelolaCatatan.lihatCatatan();
-                                else if (subSub == 3) pengelolaCatatan.editCatatan();
-                                else if (subSub == 4) pengelolaCatatan.hapusCatatan();
-                            } while (subSub != 0);
-                            break;
-                        }
-                        case 2: {
-                            int subSub;
-                            do {
-                                cout << endl;
-                                cout << "==============================" << endl;
-                                cout << "        Study Planner" << endl;
-                                cout << "==============================" << endl;
-                                cout << "1. Tambah Sesi" << endl;
-                                cout << "2. Tandai Selesai" << endl;
-                                cout << "3. Lihat Sesi" << endl;
-                                cout << "4. Produktivitas" << endl;
-                                cout << "0. Back" << endl;
-                                cout << "Choose: ";
-                                cin >> subSub;
-                                if (subSub == 1) perencanaBelajar.tambahSesi();
-                                else if (subSub == 2) perencanaBelajar.tandaiSelesai();
-                                else if (subSub == 3) perencanaBelajar.lihatSesi();
-                                else if (subSub == 4) cout << "Produktivitas: " << perencanaBelajar.hitungProduktivitas() << "%" << endl;
-                            } while (subSub != 0);
-                            break;
-                        }
-                    }
-                } while (subPilihan != 0);
-                break;
-            }
-            case 2: {
-                // Student Life Tools submenu
-                int subPilihan;
-                do {
-                    cout << endl;
-                    cout << "==============================" << endl;
-                    cout << "     Student Life Tools" << endl;
-                    cout << "==============================" << endl;
-                    cout << "1. Expense Tracker" << endl;
-                    cout << "2. Personal Task Organizer" << endl;
-                    cout << "0. Back" << endl;
-                    cout << "Choose: ";
-                    cin >> subPilihan;
-                    switch (subPilihan) {
-                        case 1: {
-                            int subSub;
-                            do {
-                                cout << endl;
-                                cout << "==============================" << endl;
-                                cout << "       Expense Tracker" << endl;
-                                cout << "==============================" << endl;
-                                cout << "1. Tambah Pengeluaran" << endl;
-                                cout << "2. Lihat Pengeluaran" << endl;
-                                cout << "3. Visualisasi" << endl;
-                                cout << "0. Back" << endl;
-                                cout << "Choose: ";
-                                cin >> subSub;
-                                if (subSub == 1) pelacakPengeluaran.tambahPengeluaran();
-                                else if (subSub == 2) pelacakPengeluaran.lihatPengeluaran();
-                                else if (subSub == 3) pelacakPengeluaran.visualisasiPengeluaran();
-                            } while (subSub != 0);
-                            break;
-                        }
-                        case 2: {
-                            int subSub;
-                            do {
-                                cout << endl;
-                                cout << "==============================" << endl;
-                                cout << "   Personal Task Organizer" << endl;
-                                cout << "==============================" << endl;
-                                cout << "1. Tambah Tugas" << endl;
-                                cout << "2. Tandai Selesai" << endl;
-                                cout << "3. Lihat Tugas" << endl;
-                                cout << "0. Back" << endl;
-                                cout << "Choose: ";
-                                cin >> subSub;
-                                if (subSub == 1) pengorganisirTugas.tambahTugas();
-                                else if (subSub == 2) pengorganisirTugas.tandaiSelesai();
-                                else if (subSub == 3) pengorganisirTugas.lihatTugas();
-                            } while (subSub != 0);
-                            break;
-                        }
-                    }
-                } while (subPilihan != 0);
-                break;
-            }
-            case 3: {
-                laporan.tampilkanLaporanMingguan();
-                break;
-            }
-            case 4: {
-                int subPilihan;
-                do {
-                    cout << endl;
-                    cout << "==============================" << endl;
-                    cout << "          Settings" << endl;
-                    cout << "==============================" << endl;
-                    cout << "1. Ubah Nama Pengguna" << endl;
-                    cout << "2. Ubah Mata Uang" << endl;
-                    cout << "3. Backup Data" << endl;
-                    cout << "0. Back" << endl;
-                    cout << "Choose: ";
-                    cin >> subPilihan;
-                    if (subPilihan == 1) pengaturan.ubahNamaPengguna();
-                    else if (subPilihan == 2) pengaturan.ubahMataUang();
-                    else if (subPilihan == 3) pengaturan.backupData();
-                } while (subPilihan != 0);
-                break;
-            }
-            case 5: {
-                pengaturan.backupData();
-                cout << "Thank you for using Campus Life Assistant!" << endl;
-                cout << "Data saved successfully." << endl;
-                break;
-            }
-            default:
-                cout << "Pilihan tidak valid." << endl;
-        }
-    } while (pilihan != 5);
+    Menu menu(pengelolaCatatan, perencanaBelajar, pelacakPengeluaran, pengorganisirTugas, laporan, pengaturan);
 
     return 0;
 }
