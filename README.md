@@ -4,6 +4,10 @@ Aplikasi berbasis C++ untuk membantu mahasiswa Universitas Gadjah Mada (UGM) men
 
 ---
 
+Berikut Website Deploy Awal (Wireframe awal) Yang Nantinya Bisa Dikembangkan dengan integrasi C++ :
+https://brilliant-toad.static.domains/campuslifeasisstant
+
+
 ## 📌 Deskripsi Proyek
 
 Campus Life Assistant adalah aplikasi desktop yang dirancang khusus untuk meningkatkan produktivitas akademik dan aktivitas harian mahasiswa melalui berbagai fitur manajemen terintegrasi.
