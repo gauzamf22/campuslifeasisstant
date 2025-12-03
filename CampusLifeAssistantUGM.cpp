@@ -2,14 +2,13 @@
 // SISTEM MANAJEMEN PERSONAL MAHASISWA UGM 
 // Telah dipersiapkan dan disusun oleh : 
 
-//1.	Anisa Karlina Febriyanti (Kimia/566999)
-//2.	Farrel Fata Varian Nugraha(Ilmu Komputer/564457)
-//3.	Muhammad Daffa Abhinaya (Fisika/562026)
-//4.	Muhammad Gauza Faliha (Ilmu Komputer/555851)
-//5.	Riyan Ramadhan Elfatih (Elins/562137) 
-//6.	Rizky Auliawati (Kimia/559954) 
-//7.	Sandy Adiyatma Pramana (Ilmu Komputer/567854)
-
+// 1. Anisa Karlina Febriyanti  
+// 2. Farrel Fata Varian Nugraha 
+// 3. Muhammad Daffa Abhinaya  
+// 4. Muhammad Gauza Faliha 
+// 5. Riyan Ramadhan Elfatih 
+// 6. Rizky Auliawati 
+// 7. Sandy Adiyatma Pramana 
 
 
 #include <iostream>
@@ -17,6 +16,7 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <ctime>
 #include <iomanip>
 #include <sstream>
 #include <map>
@@ -24,6 +24,8 @@
 #include <chrono>
 #include <conio.h>
 #include <windows.h>
+#include <random>
+#include <limits>
 
 using namespace std;
 
@@ -53,7 +55,7 @@ void resetColor() {
     setColor(7); 
 }
 
-// Warna
+// Konstanta warna
 #define COLOR_RED 12
 #define COLOR_ORANGE 13
 #define COLOR_YELLOW 14
@@ -141,7 +143,7 @@ int textHeight = sizeof(bigText) / sizeof(bigText[0]);
 void slideUp() {
     int screenHeight = 30;
     
-    
+    // Array warna untuk setiap bagian
     int colors[] = {
         COLOR_RED,    // "WELCOME" (baris 0-6)
         COLOR_ORANGE, // "TO" (baris 8-17)
@@ -150,7 +152,7 @@ void slideUp() {
         COLOR_GREEN   // "ASSISTANT" (baris 39-45)
     };
     
-    // Range baris 
+    // Range baris untuk setiap kata
     int ranges[][2] = {
         {0, 6},   // WELCOME
         {9, 15},  // TO
@@ -165,6 +167,7 @@ void slideUp() {
         for (int i = 0; i < textHeight; i++) {
             int posY = offset + i;
             if (posY >= 0 && posY < screenHeight) {
+                // Tentukan warna berdasarkan baris
                 int currentColor = COLOR_WHITE;
                 for (int j = 0; j < 5; j++) {
                     if (i >= ranges[j][0] && i <= ranges[j][1]) {
@@ -179,16 +182,17 @@ void slideUp() {
             }
         }
         
-        Beep(500, 80);
+        Beep(600, 30);
         Sleep(50);
     }
     
     resetColor();
-    Beep(800, 150);
-    Sleep(500
-    );
+    Beep(800, 200);
+    Beep(1000, 200);
+    Sleep(1000);
 }
 
+// Letakkan fungsi ini setelah fungsi slideUp()
 void printColoredASCII() {
     system("cls");
     
@@ -232,9 +236,7 @@ void welcomeScreen() {
     system("cls");
     
     // ASCII Robot
-    cout << "=====================================" << endl ;
-    setColor(COLOR_BLUE); 
-    
+    setColor(COLOR_BLUE); // Warna biru untuk robot
     cout << R"(
       ////^\\\\
       | ^   ^ |
@@ -255,6 +257,7 @@ void welcomeScreen() {
 
     resetColor();
     
+    // Pesan sambutan
     cout << "=====================================" << endl;
     setColor(COLOR_YELLOW);
     cout << "  Halo, selamat datang di" << endl;
@@ -270,7 +273,7 @@ void welcomeScreen() {
     cout << endl;
     cout << "=====================================" << endl;
     
-    // Coundown in
+    // Countdown
     setColor(COLOR_GREEN);
     for (int i = 5; i > 0; i--) {
         cout << "\rMemulai dalam " << i << " detik...   " << flush;
@@ -285,8 +288,7 @@ void goodbyeScreen() {
     system("cls");
     
     // ASCII Robot
-    cout << "=====================================" << endl ;
-    setColor(COLOR_GREEN); 
+    setColor(COLOR_GREEN); // Warna hijau untuk goodbye
     cout << R"(
       ////^\\\\
       | ^   ^ |
@@ -307,6 +309,7 @@ void goodbyeScreen() {
 
     resetColor();
     
+    // Pesan penutup
     cout << "=====================================" << endl;
     setColor(COLOR_YELLOW);
     cout << "  Terima kasih telah menggunakan" << endl;
@@ -322,7 +325,7 @@ void goodbyeScreen() {
     cout << "=====================================" << endl;
     cout << endl;
     
-    // Countdown out
+    // Countdown sebelum keluar
     setColor(COLOR_RED);
     for (int i = 5; i > 0; i--) {
         cout << "\rKeluar dalam " << i << " detik...   " << flush;
@@ -633,18 +636,30 @@ public:
     }
 
     void visualisasiPengeluaran() {
-        // ASCII bar chart
-        map<string, double> totalKategori;
-        for (const auto& p : daftarPengeluaran) {
-            totalKategori[p.kategori] += p.jumlah;
-        }
-        for (const auto& pair : totalKategori) {
-            cout << left << setw(10) << pair.first << " ";
-            int barLength = static_cast<int>(pair.second / 10000); 
-            for (int i = 0; i < barLength; i++) cout << "█";
-            cout << " " << pair.second << "k" << endl;
-        }
+    if (daftarPengeluaran.empty()) {
+        cout << "Belum ada data pengeluaran!" << endl;
+        return;
     }
+    
+    map<string, double> totalKategori;
+    for (const auto& p : daftarPengeluaran) {
+        totalKategori[p.kategori] += p.jumlah;
+    }
+    
+    // Find max value for better scaling
+    double maxTotal = 0;
+    for (const auto& pair : totalKategori) {
+        if (pair.second > maxTotal) maxTotal = pair.second;
+    }
+    
+    cout << "\n=== Visualisasi Pengeluaran ===" << endl;
+    for (const auto& pair : totalKategori) {
+        cout << left << setw(15) << pair.first << " ";
+        int barLength = static_cast<int>((pair.second / maxTotal) * 50); 
+        for (int i = 0; i < barLength; i++) cout << "█";
+        cout << " Rp " << fixed << setprecision(0) << pair.second << endl;
+    }
+}
 
     const vector<Pengeluaran>& getDaftarPengeluaran() const {
         return daftarPengeluaran;
@@ -817,12 +832,15 @@ int main() {
     clearScreen();  
     SetConsoleOutputCP(CP_UTF8);
 
+
+
     slideUp();
     printColoredASCII();
+    cout << "=====================================" << endl;
     welcomeScreen();       
     clearScreen();  
 
-    
+   
     PengelolaCatatan pengelolaCatatan;
     PerencanaBelajar perencanaBelajar;
     PelacakPengeluaran pelacakPengeluaran;
@@ -832,9 +850,9 @@ int main() {
 
     int pilihan;
     do {
-        cout << "=====================================" << endl;
-        cout << "       CAMPUS LIFE ASSISTANT" << endl;
-        cout << "=====================================" << endl;
+        cout << "==============================" << endl;
+        cout << "     CAMPUS LIFE ASSISTANT" << endl;
+        cout << "==============================" << endl;
         cout << "1. Academic Tools" << endl;
         cout << "2. Student Life Tools" << endl;
         cout << "3. Reports & Insights" << endl;
@@ -985,6 +1003,7 @@ int main() {
             }
             case 5: {
                 pengaturan.backupData();
+                cout << "=====================================" << endl;
                 goodbyeScreen();
                 break;
 
@@ -996,4 +1015,3 @@ int main() {
 
     return 0;
 }
-
