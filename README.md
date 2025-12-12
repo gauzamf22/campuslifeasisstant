@@ -5,7 +5,7 @@ Aplikasi berbasis C++ untuk membantu mahasiswa Universitas Gadjah Mada (UGM) men
 ---
 
 Berikut Website Deploy Awal (Wireframe awal) Yang Nantinya Bisa Dikembangkan dengan integrasi C++ :
-https://brilliant-toad.static.domains/campuslifeasisstant
+https://magnetic-pelican.static.domains/campuslifeassistantugm
 
 
 ## 📌 Deskripsi Proyek
