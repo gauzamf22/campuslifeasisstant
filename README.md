@@ -16,14 +16,23 @@ Campus Life Assistant adalah aplikasi desktop yang dirancang khusus untuk mening
 
 ## 👥 Tim Pengembang
 
-1.	Anisa Karlina Febriyanti (kimia/566999)
+1.	Anisa Karlina Febriyanti (Kimia/566999)
 2.	Farrel Fata Varian Nugraha(Ilmu Komputer/564457)
 3.	Muhammad Daffa Abhinaya (Fisika/562026)
-4.	Muhammad Gauza Faliha (Ilmu Komputer/555851)
+4.	Muhammad Gauza Faliha (Ilmu Komputer/555851) 
 5.	Riyan Ramadhan Elfatih (Elins/562137) 
 6.	Rizky Auliawati (Kimia/559954) 
 7.	Sandy Adiyatma Pramana (Ilmu Komputer/567854)
 
+## Tugas Tiap Pengembang 
+
+1.	Anisa Karlina Febriyanti (Kimia/566999) ~ Testing dan Laporan 
+2.	Farrel Fata Varian Nugraha(Ilmu Komputer/564457) ~ Programmer (Modular Sistem) 
+3.	Muhammad Daffa Abhinaya (Fisika/562026) ~ Testing dan Laporan
+4.	Muhammad Gauza Faliha (Ilmu Komputer/555851) ~ Lead of team (Programmer (main) )
+5.	Riyan Ramadhan Elfatih (Elins/562137) ~ Algoritma dan Flowchart
+6.	Rizky Auliawati (Kimia/559954) ~ Testing dan Laporan
+7.	Sandy Adiyatma Pramana (Ilmu Komputer/567854) ~ Programmer (Modular Sistem)
 ---
 
 ## 🎯 Fitur Utama
