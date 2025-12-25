@@ -5,7 +5,7 @@ Aplikasi berbasis C++ untuk membantu mahasiswa Universitas Gadjah Mada (UGM) men
 ---
 
 Berikut Website Deploy Awal (Wireframe awal) Yang Nantinya Bisa Dikembangkan dengan integrasi C++ :
-https://campus-life-assistant-webprototype-git-main-gauzamf22s-projects.vercel.app/
+https://clanew.vercel.app/
 
 
 ## 📌 Deskripsi Proyek
